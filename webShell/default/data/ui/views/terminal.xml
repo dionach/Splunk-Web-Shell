@@ -1,0 +1,6 @@
+<view isVisible="true" template="search.html">
+  <module name="AccountBar" layoutPanel="appHeader"/>
+  <module name="WCIFrameInclude" layoutPanel="viewHeader">
+      <param name="src">/custom/webShell/terminal</param>
+  </module>
+</view>

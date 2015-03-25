@@ -1,0 +1,16 @@
+body {
+    margin: 0px;
+}
+
+.SplunkModule {
+    padding: 0px;
+}
+
+.ManagerBar {
+    background-color: #000;
+}
+
+#term_demo {
+    height: 300px;
+    overflow: auto; 
+}

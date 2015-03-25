@@ -1,0 +1,55 @@
+<%inherit file="//layout/base.html"/>
+
+
+<%namespace name="lib" file="//lib.html" import="*"/>
+<%def name="custom_css()">
+  <%lib:stylesheet_tags files="${['/static/app/%s/application.css' % app, '/static/app/%s/jquery.terminal.css' % app]}"/>
+  <%lib:script_tags files="${['/static/app/%s/jquery.terminal-min.js' % app]}" />
+</%def>
+
+<div id="term_demo" class="terminal"></div>
+
+<script type="text/javascript">
+    jQuery(function($, undefined) {
+        var execute = function(command) {
+            return $.ajax({
+                url: "${make_url(['custom',app,'terminal'])}",
+                type: 'POST',
+                data: {'command':command}
+            });
+        };
+        
+        var escapeHtml = function(input) {
+            return (""+input).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        };
+        var a = 'a';
+        $('#term_demo').terminal(function(command, term) {
+            if (command == '') {
+                return;
+            }
+            term.pause();
+            var result = execute(command);
+            result.done(function(data,status,xhr) {
+                var payload = escapeHtml(data.payload);
+                if (data.success) {
+                    term.echo(new String(payload));
+                } else {
+                    term.error(new String(payload));
+                }
+                
+                term.resume();
+            });
+
+        }, {
+            greetings: 'webShell> A basic web shell for Splunk.\n',
+            name: 'js_demo',
+            height: 540,
+            prompt: '$ ',
+            onBlur: function() {
+                // the height of the body is only 2 lines initialy
+                return false;
+            }
+        });
+    });
+
+</script>

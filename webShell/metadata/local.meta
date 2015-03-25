@@ -1,0 +1,9 @@
+[]
+access = read : [ admin ], write : [ admin ]
+export = none
+version = 1.0
+modtime = 1380585134.274484400
+
+[app/install/install_source_checksum]
+version = 6.2.2
+modtime = 1427144177.579962500
